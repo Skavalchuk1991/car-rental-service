@@ -10,9 +10,9 @@ public class Rental {
     private double totalPrice;
     private boolean active;
     private LocalDateTime createdAt;
-    private Long customerId;
-    private Long carId;
-    private Long insuranceId;
+    private Car car;
+    private Insurance insurance;
+    private Payment payment;
     public Long getId() {
         return id;
     }
@@ -49,22 +49,22 @@ public class Rental {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    public Long getCustomerId() {
-        return customerId;
+    public Car getCar() {
+        return car;
     }
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setCar(Car car) {
+        this.car = car;
     }
-    public Long getCarId() {
-        return carId;
+    public Insurance getInsurance() {
+        return insurance;
     }
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
     }
-    public Long getInsuranceId() {
-        return insuranceId;
+    public Payment getPayment() {
+        return payment;
     }
-    public void setInsuranceId(Long insuranceId) {
-        this.insuranceId = insuranceId;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

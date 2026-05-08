@@ -2,21 +2,33 @@ DROP DATABASE IF EXISTS car_rental;
 CREATE DATABASE car_rental;
 USE car_rental;
 
--- Categories (SUV, Sedan, Economy, etc.)
+-- Rental services (root entity)
+CREATE TABLE rental_services (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    total_fleet_size INT NOT NULL DEFAULT 0
+);
+
+-- Categories
 CREATE TABLE categories (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     description VARCHAR(255),
-    price_multiplier DOUBLE NOT NULL DEFAULT 1.0
+    price_multiplier DOUBLE NOT NULL DEFAULT 1.0,
+    rental_service_id BIGINT NOT NULL,
+    FOREIGN KEY (rental_service_id) REFERENCES rental_services(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Branches (rental locations)
+-- Branches
 CREATE TABLE branches (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     address VARCHAR(255) NOT NULL,
     city VARCHAR(100) NOT NULL,
-    opened_at DATETIME NOT NULL
+    opened_at DATETIME NOT NULL,
+    rental_service_id BIGINT NOT NULL,
+    FOREIGN KEY (rental_service_id) REFERENCES rental_services(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 -- Cars
@@ -54,16 +66,20 @@ CREATE TABLE customers (
     email VARCHAR(100) NOT NULL UNIQUE,
     phone VARCHAR(20),
     verified BOOLEAN NOT NULL DEFAULT FALSE,
-    registered_at DATETIME NOT NULL
+    registered_at DATETIME NOT NULL,
+    rental_service_id BIGINT NOT NULL,
+    FOREIGN KEY (rental_service_id) REFERENCES rental_services(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
--- Insurance types
+-- Insurances
 CREATE TABLE insurances (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     type VARCHAR(50) NOT NULL,
     coverage_amount DOUBLE NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
-    valid_until DATETIME NOT NULL
+    valid_until DATETIME NOT NULL,
+    rental_service_id BIGINT NOT NULL,
+    FOREIGN KEY (rental_service_id) REFERENCES rental_services(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 -- Rentals
@@ -82,7 +98,7 @@ CREATE TABLE rentals (
     FOREIGN KEY (insurance_id) REFERENCES insurances(id) ON DELETE SET NULL ON UPDATE NO ACTION
 );
 
--- Payments (one-to-one with rental)
+-- Payments
 CREATE TABLE payments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     amount DOUBLE NOT NULL,

@@ -1,6 +1,7 @@
 package com.solvd.carrentalservice.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Car {
     private Long id;
@@ -10,8 +11,8 @@ public class Car {
     private double dailyRate;
     private boolean available;
     private LocalDateTime createdAt;
-    private Long categoryId;
-    private Long branchId;
+    private Category category;
+    private List<MaintenanceRecord> maintenanceRecords;
     public Long getId() {
         return id;
     }
@@ -54,16 +55,16 @@ public class Car {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    public Long getCategoryId() {
-        return categoryId;
+    public Category getCategory() {
+        return category;
     }
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setCategory(Category category) {
+        this.category = category;
     }
-    public Long getBranchId() {
-        return branchId;
+    public List<MaintenanceRecord> getMaintenanceRecords() {
+        return maintenanceRecords;
     }
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
+    public void setMaintenanceRecords(List<MaintenanceRecord> maintenanceRecords) {
+        this.maintenanceRecords = maintenanceRecords;
     }
 }

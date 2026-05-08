@@ -7,8 +7,7 @@ public class Review {
     private int rating;
     private String comment;
     private LocalDateTime reviewDate;
-    private Long customerId;
-    private Long carId;
+    private Car car;
     public Long getId() {
         return id;
     }
@@ -33,16 +32,10 @@ public class Review {
     public void setReviewDate(LocalDateTime reviewDate) {
         this.reviewDate = reviewDate;
     }
-    public Long getCustomerId() {
-        return customerId;
+    public Car getCar() {
+        return car;
     }
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-    public Long getCarId() {
-        return carId;
-    }
-    public void setCarId(Long carId) {
-        this.carId = carId;
+    public void setCar(Car car) {
+        this.car = car;
     }
 }

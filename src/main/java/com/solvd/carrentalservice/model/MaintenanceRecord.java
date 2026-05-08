@@ -8,7 +8,6 @@ public class MaintenanceRecord {
     private double cost;
     private boolean completed;
     private LocalDateTime scheduledAt;
-    private Long carId;
     public Long getId() {
         return id;
     }
@@ -38,11 +37,5 @@ public class MaintenanceRecord {
     }
     public void setScheduledAt(LocalDateTime scheduledAt) {
         this.scheduledAt = scheduledAt;
-    }
-    public Long getCarId() {
-        return carId;
-    }
-    public void setCarId(Long carId) {
-        this.carId = carId;
     }
 }

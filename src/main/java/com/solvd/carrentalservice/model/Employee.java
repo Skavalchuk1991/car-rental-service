@@ -9,7 +9,6 @@ public class Employee {
     private String position;
     private double salary;
     private LocalDate hiredAt;
-    private Long branchId;
     public Long getId() {
         return id;
     }
@@ -45,11 +44,5 @@ public class Employee {
     }
     public void setHiredAt(LocalDate hiredAt) {
         this.hiredAt = hiredAt;
-    }
-    public Long getBranchId() {
-        return branchId;
-    }
-    public void setBranchId(Long branchId) {
-        this.branchId = branchId;
     }
 }

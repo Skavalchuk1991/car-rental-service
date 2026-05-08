@@ -7,7 +7,6 @@ public class Payment {
     private double amount;
     private boolean paid;
     private LocalDateTime paymentDate;
-    private Long rentalId;
     public Long getId() {
         return id;
     }
@@ -31,11 +30,5 @@ public class Payment {
     }
     public void setPaymentDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
-    }
-    public Long getRentalId() {
-        return rentalId;
-    }
-    public void setRentalId(Long rentalId) {
-        this.rentalId = rentalId;
     }
 }
