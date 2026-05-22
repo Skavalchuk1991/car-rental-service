@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.carrentalservice.dao.mybatis.CarMapperDao">
+
+    <resultMap id="CarResult" type="Car">
+        <id property="id" column="id"/>
+        <result property="brand" column="brand"/>
+        <result property="model" column="model"/>
+        <result property="year" column="year"/>
+        <result property="dailyRate" column="daily_rate"/>
+        <result property="available" column="available"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <insert id="create" parameterType="Car" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cars (brand, model, year, daily_rate, available, created_at, category_id, branch_id)
+        VALUES (#{brand}, #{model}, #{year}, #{dailyRate}, #{available}, #{createdAt}, #{category.id}, 1)
+    </insert>
+
+    <select id="findById" resultMap="CarResult">
+        SELECT * FROM cars WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="CarResult">
+        SELECT * FROM cars
+    </select>
+
+    <update id="update" parameterType="Car">
+        UPDATE cars SET brand = #{brand}, model = #{model}, year = #{year},
+        daily_rate = #{dailyRate}, available = #{available} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM cars WHERE id = #{id}
+    </delete>
+
+    <select id="findByBranchId" resultMap="CarResult">
+        SELECT * FROM cars WHERE branch_id = #{branchId}
+    </select>
+
+</mapper>

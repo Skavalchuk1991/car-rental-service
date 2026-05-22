@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.carrentalservice.dao.mybatis.RentalMapperDao">
+
+    <resultMap id="RentalResult" type="Rental">
+        <id property="id" column="id"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="active" column="active"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <resultMap id="RentalDetailResult" type="Rental">
+        <id property="id" column="id"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="active" column="active"/>
+        <result property="createdAt" column="created_at"/>
+        <association property="car" javaType="Car">
+            <id property="id" column="car_id"/>
+            <result property="brand" column="brand"/>
+            <result property="model" column="model"/>
+            <result property="year" column="car_year"/>
+            <result property="dailyRate" column="daily_rate"/>
+            <result property="available" column="car_available"/>
+            <association property="category" javaType="Category">
+                <id property="id" column="cat_id"/>
+                <result property="name" column="cat_name"/>
+                <result property="description" column="cat_desc"/>
+                <result property="priceMultiplier" column="price_multiplier"/>
+            </association>
+        </association>
+        <association property="insurance" javaType="Insurance">
+            <id property="id" column="ins_id"/>
+            <result property="type" column="ins_type"/>
+            <result property="coverageAmount" column="coverage_amount"/>
+            <result property="active" column="ins_active"/>
+            <result property="validUntil" column="valid_until"/>
+        </association>
+        <association property="payment" javaType="Payment">
+            <id property="id" column="pay_id"/>
+            <result property="amount" column="amount"/>
+            <result property="paid" column="paid"/>
+            <result property="paymentDate" column="payment_date"/>
+        </association>
+    </resultMap>
+
+    <insert id="create" parameterType="Rental" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO rentals (start_date, end_date, total_price, active, created_at, customer_id, car_id, insurance_id)
+        VALUES (#{startDate}, #{endDate}, #{totalPrice}, #{active}, #{createdAt}, 1, #{car.id}, #{insurance.id})
+    </insert>
+
+    <select id="findById" resultMap="RentalResult">
+        SELECT * FROM rentals WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="RentalResult">
+        SELECT * FROM rentals
+    </select>
+
+    <update id="update" parameterType="Rental">
+        UPDATE rentals SET start_date = #{startDate}, end_date = #{endDate},
+        total_price = #{totalPrice}, active = #{active} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM rentals WHERE id = #{id}
+    </delete>
+
+    <select id="findByCustomerId" resultMap="RentalResult">
+        SELECT * FROM rentals WHERE customer_id = #{customerId}
+    </select>
+
+    <select id="findAllWithDetails" resultMap="RentalDetailResult">
+        SELECT r.id, r.start_date, r.end_date, r.total_price, r.active, r.created_at,
+               c.id AS car_id, c.brand, c.model, c.year AS car_year, c.daily_rate, c.available AS car_available,
+               cat.id AS cat_id, cat.name AS cat_name, cat.description AS cat_desc, cat.price_multiplier,
+               ins.id AS ins_id, ins.type AS ins_type, ins.coverage_amount, ins.active AS ins_active, ins.valid_until,
+               p.id AS pay_id, p.amount, p.paid, p.payment_date
+        FROM rentals r
+        JOIN cars c ON r.car_id = c.id
+        JOIN categories cat ON c.category_id = cat.id
+        LEFT JOIN insurances ins ON r.insurance_id = ins.id
+        LEFT JOIN payments p ON p.rental_id = r.id
+    </select>
+
+</mapper>

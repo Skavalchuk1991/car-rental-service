@@ -1,48 +1,65 @@
 package com.solvd.carrentalservice.service.impl;
 
-import com.solvd.carrentalservice.dao.RentalDao;
-import com.solvd.carrentalservice.dao.impl.RentalDaoImpl;
+import com.solvd.carrentalservice.dao.mybatis.RentalMapperDao;
 import com.solvd.carrentalservice.model.Rental;
 import com.solvd.carrentalservice.service.RentalOrderService;
+import com.solvd.carrentalservice.util.MyBatisSessionFactory;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
 public class RentalOrderServiceImpl implements RentalOrderService {
-    private final RentalDao rentalDao = new RentalDaoImpl();
 
     @Override
     public void create(Rental rental) {
-        rentalDao.create(rental);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(RentalMapperDao.class).create(rental);
+            session.commit();
+        }
     }
 
     @Override
     public Optional<Rental> findById(Long id) {
-        return rentalDao.findById(id);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(RentalMapperDao.class).findById(id);
+        }
     }
 
     @Override
     public List<Rental> findAll() {
-        return rentalDao.findAll();
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(RentalMapperDao.class).findAll();
+        }
     }
 
     @Override
     public void update(Rental rental) {
-        rentalDao.update(rental);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(RentalMapperDao.class).update(rental);
+            session.commit();
+        }
     }
 
     @Override
     public void delete(Long id) {
-        rentalDao.delete(id);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(RentalMapperDao.class).delete(id);
+            session.commit();
+        }
     }
 
     @Override
     public List<Rental> findByCustomerId(Long customerId) {
-        return rentalDao.findByCustomerId(customerId);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(RentalMapperDao.class).findByCustomerId(customerId);
+        }
     }
 
     @Override
     public List<Rental> findAllWithDetails() {
-        return rentalDao.findAllWithDetails();
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(RentalMapperDao.class).findAllWithDetails();
+        }
     }
 }

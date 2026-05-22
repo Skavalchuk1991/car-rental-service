@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="config.properties"/>
+
+    <typeAliases>
+        <typeAlias type="com.solvd.carrentalservice.model.Car" alias="Car"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Customer" alias="Customer"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Rental" alias="Rental"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Branch" alias="Branch"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Employee" alias="Employee"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Payment" alias="Payment"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Category" alias="Category"/>
+        <typeAlias type="com.solvd.carrentalservice.model.Insurance" alias="Insurance"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${db.driver}"/>
+                <property name="url" value="${db.url}"/>
+                <property name="username" value="${db.username}"/>
+                <property name="password" value="${db.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/CarMapper.xml"/>
+        <mapper resource="mappers/CustomerMapper.xml"/>
+        <mapper resource="mappers/RentalMapper.xml"/>
+        <mapper resource="mappers/BranchMapper.xml"/>
+        <mapper resource="mappers/EmployeeMapper.xml"/>
+        <mapper resource="mappers/PaymentMapper.xml"/>
+    </mappers>
+
+</configuration>

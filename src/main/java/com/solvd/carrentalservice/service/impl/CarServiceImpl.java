@@ -1,43 +1,58 @@
 package com.solvd.carrentalservice.service.impl;
 
-import com.solvd.carrentalservice.dao.CarDao;
-import com.solvd.carrentalservice.dao.impl.CarDaoImpl;
+import com.solvd.carrentalservice.dao.mybatis.CarMapperDao;
 import com.solvd.carrentalservice.model.Car;
 import com.solvd.carrentalservice.service.CarService;
+import com.solvd.carrentalservice.util.MyBatisSessionFactory;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
 public class CarServiceImpl implements CarService {
-    private final CarDao carDao = new CarDaoImpl();
 
     @Override
     public void create(Car car) {
-        carDao.create(car);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(CarMapperDao.class).create(car);
+            session.commit();
+        }
     }
 
     @Override
     public Optional<Car> findById(Long id) {
-        return carDao.findById(id);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(CarMapperDao.class).findById(id);
+        }
     }
 
     @Override
     public List<Car> findAll() {
-        return carDao.findAll();
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(CarMapperDao.class).findAll();
+        }
     }
 
     @Override
     public void update(Car car) {
-        carDao.update(car);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(CarMapperDao.class).update(car);
+            session.commit();
+        }
     }
 
     @Override
     public void delete(Long id) {
-        carDao.delete(id);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(CarMapperDao.class).delete(id);
+            session.commit();
+        }
     }
 
     @Override
     public List<Car> findByBranchId(Long branchId) {
-        return carDao.findByBranchId(branchId);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(CarMapperDao.class).findByBranchId(branchId);
+        }
     }
 }

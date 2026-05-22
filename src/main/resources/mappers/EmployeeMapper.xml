@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.carrentalservice.dao.mybatis.EmployeeMapperDao">
+
+    <resultMap id="EmployeeResult" type="Employee">
+        <id property="id" column="id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="position" column="position"/>
+        <result property="salary" column="salary"/>
+        <result property="hiredAt" column="hired_at"/>
+    </resultMap>
+
+    <insert id="create" parameterType="Employee" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO employees (first_name, last_name, position, salary, hired_at, branch_id)
+        VALUES (#{firstName}, #{lastName}, #{position}, #{salary}, #{hiredAt}, 1)
+    </insert>
+
+    <select id="findById" resultMap="EmployeeResult">
+        SELECT * FROM employees WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="EmployeeResult">
+        SELECT * FROM employees
+    </select>
+
+    <update id="update" parameterType="Employee">
+        UPDATE employees SET first_name = #{firstName}, last_name = #{lastName},
+        position = #{position}, salary = #{salary} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM employees WHERE id = #{id}
+    </delete>
+
+    <select id="findByBranchId" resultMap="EmployeeResult">
+        SELECT * FROM employees WHERE branch_id = #{branchId}
+    </select>
+
+</mapper>

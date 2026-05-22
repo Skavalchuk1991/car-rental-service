@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.carrentalservice.dao.mybatis.BranchMapperDao">
+
+    <resultMap id="BranchResult" type="Branch">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="city" column="city"/>
+        <result property="openedAt" column="opened_at"/>
+    </resultMap>
+
+    <insert id="create" parameterType="Branch" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO branches (name, address, city, opened_at, rental_service_id)
+        VALUES (#{name}, #{address}, #{city}, #{openedAt}, 1)
+    </insert>
+
+    <select id="findById" resultMap="BranchResult">
+        SELECT * FROM branches WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BranchResult">
+        SELECT * FROM branches
+    </select>
+
+    <update id="update" parameterType="Branch">
+        UPDATE branches SET name = #{name}, address = #{address}, city = #{city} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM branches WHERE id = #{id}
+    </delete>
+
+</mapper>

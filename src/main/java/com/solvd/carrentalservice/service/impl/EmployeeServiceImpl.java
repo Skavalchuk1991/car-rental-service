@@ -1,43 +1,58 @@
 package com.solvd.carrentalservice.service.impl;
 
-import com.solvd.carrentalservice.dao.EmployeeDao;
-import com.solvd.carrentalservice.dao.impl.EmployeeDaoImpl;
+import com.solvd.carrentalservice.dao.mybatis.EmployeeMapperDao;
 import com.solvd.carrentalservice.model.Employee;
 import com.solvd.carrentalservice.service.EmployeeService;
+import com.solvd.carrentalservice.util.MyBatisSessionFactory;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 import java.util.Optional;
 
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeDao employeeDao = new EmployeeDaoImpl();
 
     @Override
     public void create(Employee employee) {
-        employeeDao.create(employee);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(EmployeeMapperDao.class).create(employee);
+            session.commit();
+        }
     }
 
     @Override
     public Optional<Employee> findById(Long id) {
-        return employeeDao.findById(id);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(EmployeeMapperDao.class).findById(id);
+        }
     }
 
     @Override
     public List<Employee> findAll() {
-        return employeeDao.findAll();
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(EmployeeMapperDao.class).findAll();
+        }
     }
 
     @Override
     public void update(Employee employee) {
-        employeeDao.update(employee);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(EmployeeMapperDao.class).update(employee);
+            session.commit();
+        }
     }
 
     @Override
     public void delete(Long id) {
-        employeeDao.delete(id);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            session.getMapper(EmployeeMapperDao.class).delete(id);
+            session.commit();
+        }
     }
 
     @Override
     public List<Employee> findByBranchId(Long branchId) {
-        return employeeDao.findByBranchId(branchId);
+        try (SqlSession session = MyBatisSessionFactory.getSqlSessionFactory().openSession()) {
+            return session.getMapper(EmployeeMapperDao.class).findByBranchId(branchId);
+        }
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.carrentalservice.dao.mybatis.PaymentMapperDao">
+
+    <resultMap id="PaymentResult" type="Payment">
+        <id property="id" column="id"/>
+        <result property="amount" column="amount"/>
+        <result property="paid" column="paid"/>
+        <result property="paymentDate" column="payment_date"/>
+    </resultMap>
+
+    <insert id="create" parameterType="Payment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO payments (amount, paid, payment_date, rental_id)
+        VALUES (#{amount}, #{paid}, #{paymentDate}, 1)
+    </insert>
+
+    <select id="findById" resultMap="PaymentResult">
+        SELECT * FROM payments WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="PaymentResult">
+        SELECT * FROM payments
+    </select>
+
+    <update id="update" parameterType="Payment">
+        UPDATE payments SET amount = #{amount}, paid = #{paid}, payment_date = #{paymentDate} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM payments WHERE id = #{id}
+    </delete>
+
+    <select id="findByRentalId" resultMap="PaymentResult">
+        SELECT * FROM payments WHERE rental_id = #{rentalId}
+    </select>
+
+</mapper>
