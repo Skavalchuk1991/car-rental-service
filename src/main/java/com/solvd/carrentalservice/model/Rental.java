@@ -85,4 +85,75 @@ public class Rental {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
+    public static class Builder {
+        private Long id;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private double totalPrice;
+        private boolean active;
+        private LocalDateTime createdAt;
+        private Car car;
+        private Insurance insurance;
+        private Payment payment;
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setStartDate(LocalDate startDate) {
+            this.startDate = startDate;
+            return this;
+        }
+
+        public Builder setEndDate(LocalDate endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public Builder setTotalPrice(double totalPrice) {
+            this.totalPrice = totalPrice;
+            return this;
+        }
+
+        public Builder setActive(boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public Builder setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder setCar(Car car) {
+            this.car = car;
+            return this;
+        }
+
+        public Builder setInsurance(Insurance insurance) {
+            this.insurance = insurance;
+            return this;
+        }
+
+        public Builder setPayment(Payment payment) {
+            this.payment = payment;
+            return this;
+        }
+
+        public Rental build() {
+            Rental rental = new Rental();
+            rental.setId(id);
+            rental.setStartDate(startDate);
+            rental.setEndDate(endDate);
+            rental.setTotalPrice(totalPrice);
+            rental.setActive(active);
+            rental.setCreatedAt(createdAt);
+            rental.setCar(car);
+            rental.setInsurance(insurance);
+            rental.setPayment(payment);
+            return rental;
+        }
+    }
 }
