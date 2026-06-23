@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="CoreSuite" verbose="2">
+    <listeners>
+        <listener class-name="com.solvd.carrentalservice.listener.TestNGListener"/>
+    </listeners>
+    <test name="CarTests">
+        <classes>
+            <class name="com.solvd.carrentalservice.service.CarServiceTest"/>
+        </classes>
+    </test>
+    <test name="CustomerTests">
+        <classes>
+            <class name="com.solvd.carrentalservice.service.CustomerServiceTest"/>
+        </classes>
+    </test>
+    <test name="BranchTests">
+        <classes>
+            <class name="com.solvd.carrentalservice.service.BranchServiceTest"/>
+        </classes>
+    </test>
+</suite>
